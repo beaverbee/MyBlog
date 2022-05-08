@@ -1,0 +1,27 @@
+.list{
+    width: calc(100%-300px);
+}
+
+.listItem{
+    position: relative;
+    border: 1px solid #aeccf8;
+    border-radius: 4px;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    transition: all 0.4s ease;
+    font-size: 1rem;
+}
+
+.listItem:hover{
+    background-color: rgba(235, 247, 252,0.8);
+    box-shadow: 0 15px 30px 0 rgba(0,0,0,0.2);
+    transform: translate3d(0,-5px, 0);
+}
+
+.listItemTitle{
+    font-size: 1.4rem;
+    margin-right: 20px;
+}
+.listItemTime{
+    font-size: 1rem;
+}
