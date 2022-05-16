@@ -1,0 +1,52 @@
+.author{
+    justify-content: space-around;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.leftNav{
+    display: flex;
+    flex-direction: column;
+    box-shadow:6px 0 6px  rgba(139, 139, 139, 0.5);
+    
+}
+
+.profile{
+    position: absolute;
+    border-radius: 150px;
+}
+
+.author {
+  font-size: 1.2em;
+  font-weight: 600;
+  margin-top: 5px;
+  
+}
+.subTitle {
+  font-size: 14px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: rgba(0, 0, 0, 0.65);
+}
+.homePage{
+    width: 214px;
+    line-height: 20px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+.homePage li{
+    padding: 0 8px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.homePage li:hover{
+    background-color: #eee;
+}
+.homePage li a{
+    vertical-align: top;
+    padding-left: 5px;
+    color: inherit;
+}

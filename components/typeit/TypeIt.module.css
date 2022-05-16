@@ -1,0 +1,9 @@
+.message{
+    position: relative;
+    color: #333;
+    font-size: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    top: 50px; 
+}
