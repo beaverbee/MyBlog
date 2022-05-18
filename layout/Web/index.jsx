@@ -1,9 +1,7 @@
-import React from "react";
 import { Row, Col, BackTopmButton } from "antd";
 import style from "./Web.module.css";
 import BlogHeader from "./header";
 import LeftNav from "./leftNav";
-
 
 // 响应式
 const siderLayout = { xxl: 4, xl: 4, lg: 4, sm: 0, xs: 0 };
@@ -18,8 +16,8 @@ export default function Web({ children }) {
           <BlogHeader></BlogHeader>
         </Col>
       </Row>
-      <Row style={{ marginTop: "60px"}}>
-        <Col span={3} offset={1} {...siderLayout} style={{position:'fixed'}}>
+      <Row style={{ marginTop: "60px" }}>
+        <Col span={3} offset={1} {...siderLayout} style={{ position: "fixed" }}>
           <LeftNav></LeftNav>
         </Col>
         <Col offset={6} {...contentLayout}>

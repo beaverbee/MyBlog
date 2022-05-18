@@ -3,7 +3,7 @@ import styles from "../styles/Home.module.css";
 import Web from "../layout/Web";
 import TypeItCompoment from "../components/typeit";
 import { memo, useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../utils/axios";
 import ArticleList from "../components/ArticleList";
 
 const article = [
@@ -17,7 +17,7 @@ const article = [
   },
   {
     title: "实现 ssh 免密登陆服务器",
-    time: "2020-01-14",
+    time: "2020-03-14",
     tags: ["Git", "Node"],
     desc: `<span>创建 ssh 公钥<span/><br/>
     <span># 进入ssh 查看公钥cat ~/.ssh/id_rsa.pub<span/><br/>
@@ -69,18 +69,13 @@ const article = [
 
 const Home = memo(function MyHome() {
   const [instance, setInstance] = useState(true);
-  const [Data, setDate] = useState(null);
   useEffect(() => {
-    async function loadData() {
-      setDate(await axios.get("/api/hello"));
-    }
     setTimeout(() => {
       setInstance(false);
-    }, 1000);
-    loadData();
+    }, 2000);
   }, []);
   return (
-    <div className={styles.container} >
+    <div className={styles.container}>
       <Head>
         <title>Blog</title>
         <meta

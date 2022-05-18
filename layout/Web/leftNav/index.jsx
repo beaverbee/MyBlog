@@ -3,10 +3,29 @@ import { Icon, Divider, Tag } from "antd";
 import style from "./leftNav.module.css";
 import Image from "next/image";
 import { Author } from "../../../config/author";
+import axios from "../../../utils/axios";
 
-const tag=['HTTP','MySQL','JavaScript','TypeScript','ES6','React','Vue']
+// const tag = [
+//   "HTTP",
+//   "MySQL",
+//   "JavaScript",
+//   "TypeScript",
+//   "ES6",
+//   "React",
+//   "Vue",
+// ];
 
 export default function LeftNav() {
+  const [tagList, setTagList] = useState([]);
+  useEffect(() => {
+    async function getData() {
+      const data = await axios.post("/tag/list",{1:"1"});
+      if (data.status === 0) {
+        setTagList(data.data);
+      }
+    }
+    getData();
+  }, []);
   return (
     <div className={style.leftNav}>
       {Author.map((item, index) => {
@@ -27,15 +46,19 @@ export default function LeftNav() {
                 <a href={item.homepages.github.link}>Github</a>
               </li>
             </ul>
-            <Divider orientation="left" style={{'fontSize':'14px'}}>标签</Divider>
+            <Divider orientation="left" style={{ fontSize: "14px" }}>
+              标签
+            </Divider>
             <div className={style.tagList}>
-              {
-                tag.map((item,index)=>{
-                  return <Tag key={index} color='orange'>
-                    {item}
-                  </Tag>
-                })
-              }
+              {tagList
+                ? tagList.map((item) => {
+                    return (
+                      <Tag key={item._id} color="orange">
+                        {item.tag}
+                      </Tag>
+                    );
+                  })
+                : undefined}
             </div>
             {index !== Author.length - 1 ? <Divider></Divider> : null}
           </aside>
