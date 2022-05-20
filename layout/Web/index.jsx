@@ -7,7 +7,6 @@ import LeftNav from "./leftNav";
 // 响应式
 const siderLayout = { xxl: 4, xl: 4, lg: 4, sm: 0, xs: 0 };
 const contentLayout = { xxl: 16, xl: 13, lg: 13, sm: 20, xs: 20 };
-=======
 
 
 export default function Web({ children }) {
