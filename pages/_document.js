@@ -6,9 +6,11 @@ export default function Document() {
   return (
     <Html>
       <Head />
+
       <link rel="stylesheet" href="/assets/icons/iconfont.css"></link>
       <body>
         <Main />
+
         <NextScript />
 
       </body>

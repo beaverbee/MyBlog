@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import { Icon, Divider, Tag ,message} from "antd";
 import style from "./leftNav.module.css";
 import Image from "next/image";
@@ -38,6 +39,7 @@ export default function LeftNav() {
               alt={item.auther}
               width="120px"
               height="120px"
+
               className={style.profile}
             ></Image>
             <h2 className={style.auther}>{item.auther}</h2>
@@ -61,6 +63,7 @@ export default function LeftNav() {
                     );
                   })
                 : undefined}
+
             </div>
             {index !== Author.length - 1 ? <Divider></Divider> : null}
           </aside>

@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import Web from "../../layout/Web";
@@ -63,6 +64,7 @@ export default function Article(props) {
     <Web>
       <Head>
         <title>{`My Blog: ${article.data.title}`}</title>
+
         <meta
           name="description"
           content="This is Blog project based on React.js and Next.js"
@@ -131,3 +133,4 @@ export async function getServerSideProps(context) {
     props: { article: data },
   };
 }
+

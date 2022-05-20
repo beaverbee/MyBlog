@@ -1,3 +1,4 @@
+
 import { Divider, Tag, message } from "antd";
 import { useRouter } from "next/router";
 
@@ -45,6 +46,7 @@ export default function ArticleList(props) {
             );
           })
         : message.error(article.msg)}
+
     </ul>
   );
 }
