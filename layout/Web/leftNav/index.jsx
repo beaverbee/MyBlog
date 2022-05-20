@@ -1,12 +1,34 @@
 import React, { useEffect, useState } from "react";
-import { Icon, Divider, Tag } from "antd";
+
+import { Icon, Divider, Tag ,message} from "antd";
 import style from "./leftNav.module.css";
 import Image from "next/image";
 import { Author } from "../../../config/author";
+import axios from "../../../utils/axios";
 
-const tag=['HTTP','MySQL','JavaScript','TypeScript','ES6','React','Vue']
+// const tag = [
+//   "HTTP",
+//   "MySQL",
+//   "JavaScript",
+//   "TypeScript",
+//   "ES6",
+//   "React",
+//   "Vue",
+// ];
 
 export default function LeftNav() {
+  const [tagList, setTagList] = useState([]);
+  useEffect(() => {
+    async function getData() {
+      const data = await axios.post("/tag/list");
+      if (data.status === 0) {
+        setTagList(data.data);
+      }else{
+        message.error(data.msg);
+      }
+    }
+    getData();
+  }, []);
   return (
     <div className={style.leftNav}>
       {Author.map((item, index) => {
@@ -15,8 +37,9 @@ export default function LeftNav() {
             <Image
               src={item.profile}
               alt={item.auther}
-              width="150px"
-              height="150px"
+              width="120px"
+              height="120px"
+
               className={style.profile}
             ></Image>
             <h2 className={style.auther}>{item.auther}</h2>
@@ -27,15 +50,20 @@ export default function LeftNav() {
                 <a href={item.homepages.github.link}>Github</a>
               </li>
             </ul>
-            <Divider orientation="left" style={{'fontSize':'16px'}}>标签</Divider>
+            <Divider orientation="left" style={{ fontSize: "14px" }}>
+              标签
+            </Divider>
             <div className={style.tagList}>
-              {
-                tag.map((item,index)=>{
-                  return <Tag key={index} color='orange'>
-                    {item}
-                  </Tag>
-                })
-              }
+              {tagList
+                ? tagList.map((item) => {
+                    return (
+                      <Tag key={item._id} color="orange">
+                        {item.tag}
+                      </Tag>
+                    );
+                  })
+                : undefined}
+
             </div>
             {index !== Author.length - 1 ? <Divider></Divider> : null}
           </aside>

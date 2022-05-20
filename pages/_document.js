@@ -6,7 +6,8 @@ export default function Document() {
   return (
     <Html>
       <Head />
-      <link rel="stylesheet" href="/assets/icons/title/iconfont.css"></link>
+
+      <link rel="stylesheet" href="/assets/icons/iconfont.css"></link>
       <body>
         <Main />
 

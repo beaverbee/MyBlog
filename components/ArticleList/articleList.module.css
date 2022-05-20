@@ -1,15 +1,21 @@
 .list{
     width: calc(100%-300px);
+
+    height: 1000px;
+    
+
 }
 
 .listItem{
     position: relative;
     border: 1px solid #aeccf8;
     border-radius: 4px;
-    padding: 10px 20px;
-    margin-bottom: 20px;
+
+    padding: 8px 20px;
+    margin-bottom: 15px;
     transition: all 0.4s ease;
-    font-size: 1rem;
+    font-size: 0.9rem;
+
 }
 
 .listItem:hover{
@@ -19,7 +25,9 @@
 }
 
 .listItemTitle{
-    font-size: 1.4rem;
+
+    font-size: 1.1rem;
+
     margin-right: 20px;
 }
 .listItemTime{

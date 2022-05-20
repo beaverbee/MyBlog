@@ -26,35 +26,36 @@ export default function BlogHeader() {
 
   return (
     <Header className={style.header}>
-      <Row style={{ height: "100%" }}>
-        <Col span={6} className={style.leftHeader}>
-          <Image
-            alt="Beaver"
-            src="/profilephoto.png"
-            className={style.profile}
-            width="60px"
-            height="60px"
-          ></Image>
-          <span>Beaver</span>
-        </Col>
-        <Col span={10} offset={1} className={style.titleList}>
-          {title.map((item, index) => {
-            return (
-              <div
-                key={index}
-                className={style.title}
-                onClick={() => {
-                  routerSwitch(item.path || undefined);
-                }}
-              >
-                <span className={item.icon}></span>
-                <span>{item.title}</span>
-              </div>
-            );
-          })}
-        </Col>
-        <Col span={6}></Col>
-      </Row>
+        <Row style={{ height: "100%" }}>
+          <Col span={6} className={style.leftHeader}>
+            <Image
+              alt="Beaver"
+              src="/profilephoto.png"
+              className={style.profile}
+              width="50px"
+              height="50px"
+            ></Image>
+            <span>Beaver</span>
+          </Col>
+          <Col span={10} offset={1} className={style.titleList}>
+            {title.map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  className={style.title}
+                  onClick={() => {
+                    routerSwitch(item.path || undefined);
+                  }}
+                >
+                  <span className={item.icon}></span>
+                  <span>{item.title}</span>
+                </div>
+              );
+            })}
+          </Col>
+          <Col span={6}></Col>
+        </Row>
+
     </Header>
   );
 }
