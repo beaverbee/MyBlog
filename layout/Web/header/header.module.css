@@ -1,9 +1,11 @@
 .header {
   background-color: rgb(68, 85, 102);
+
   height: 50px;
   width: 100%;
   position: fixed;
   z-index: 1;
+
 }
 .titleList {
   display: flex !important;
@@ -16,10 +18,12 @@
   display: flex;
   flex:1;
   height: 100%;
+
   font-size: 16px;
   color: white;
   justify-content: center;
   align-items: center;
+
 }
 
 .title:hover{
@@ -28,7 +32,9 @@
 }
 
 .profile{
+
   border-radius: 25px;
+
   transform: rotate(0deg);
   transition: transform 1.5s ease;
 }

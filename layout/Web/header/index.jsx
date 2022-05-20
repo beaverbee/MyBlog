@@ -26,7 +26,6 @@ export default function BlogHeader() {
 
   return (
     <Header className={style.header}>
-
         <Row style={{ height: "100%" }}>
           <Col span={6} className={style.leftHeader}>
             <Image
@@ -56,6 +55,7 @@ export default function BlogHeader() {
           </Col>
           <Col span={6}></Col>
         </Row>
+
     </Header>
   );
 }
