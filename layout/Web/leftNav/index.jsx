@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Icon, Divider, Tag } from "antd";
+import { Icon, Divider, Tag ,message} from "antd";
 import style from "./leftNav.module.css";
 import Image from "next/image";
 import { Author } from "../../../config/author";
@@ -19,9 +19,11 @@ export default function LeftNav() {
   const [tagList, setTagList] = useState([]);
   useEffect(() => {
     async function getData() {
-      const data = await axios.post("/tag/list",{1:"1"});
+      const data = await axios.post("/tag/list");
       if (data.status === 0) {
         setTagList(data.data);
+      }else{
+        message.error(data.msg);
       }
     }
     getData();

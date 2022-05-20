@@ -67,12 +67,15 @@ const article = [
   },
 ];
 
-const Home = memo(function MyHome() {
+let first = true;
+const Home = memo(function MyHome(props) {
   const [instance, setInstance] = useState(true);
+  const { data } = props;
   useEffect(() => {
     setTimeout(() => {
       setInstance(false);
-    }, 2000);
+    }, 5000);
+    first=false
   }, []);
   return (
     <div className={styles.container}>
@@ -84,14 +87,19 @@ const Home = memo(function MyHome() {
         />
       </Head>
       <Web>
-        {instance ? (
+        {instance&&first ? (
           <TypeItCompoment />
         ) : (
-          <ArticleList list={article}></ArticleList>
+          <ArticleList article={data}></ArticleList>
         )}
       </Web>
     </div>
   );
 });
+
+export async function getStaticProps() {
+  const data = await axios.post("/article/list");
+  return { props: { data } };
+}
 
 export default Home;

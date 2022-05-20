@@ -41,7 +41,7 @@ service.interceptors.response.use(
             message.error("登录信息过期或未授权，请重新登录！");
             break;
           default:
-            message.error(data || "连接错误");
+            message.error(status + "连接错误");
             break;
         }
       }
