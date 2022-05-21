@@ -18,9 +18,8 @@ const service = axios.create({
 service.interceptors.request.use((config) => {
 if (config.method === "post") {
   // 修改 Content-Type
-  config.headers["Content-Type"] = "application/x-www-form-urlencoded";
-  // 将对象参数转换为序列化的 URL 形式（key=val&key=val）
-  config.data = JSON.stringify(config.data);
+  config.headers["Content-Type"] =
+    "application/x-www-form-urlencoded;charset=UTF-8";
 }
 return config;
 });

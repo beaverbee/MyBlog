@@ -6,18 +6,12 @@ import Image from "next/image";
 import { Author } from "../../../config/author";
 import axios from "../../../utils/axios";
 
-// const tag = [
-//   "HTTP",
-//   "MySQL",
-//   "JavaScript",
-//   "TypeScript",
-//   "ES6",
-//   "React",
-//   "Vue",
-// ];
+
+
 
 export default function LeftNav() {
   const [tagList, setTagList] = useState([]);
+  
   useEffect(() => {
     async function getData() {
       const data = await axios.post("/tag/list");
@@ -39,7 +33,7 @@ export default function LeftNav() {
               alt={item.auther}
               width="120px"
               height="120px"
-
+              priority
               className={style.profile}
             ></Image>
             <h2 className={style.auther}>{item.auther}</h2>

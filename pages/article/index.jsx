@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import Web from "../../layout/Web";
@@ -6,7 +5,7 @@ import styles from "./article.module.css";
 import { Spin, Divider, Tag, Row, Col, Anchor, message } from "antd";
 import Navigation from "../../components/Navigation";
 import axios from "../../utils/axios";
-
+import Discuss from "../../components/Discuss";
 
 function getAnchorList(str) {
   const pattern = /<(h[1-6])[\s\S]+?(?=<\/\1>)/g; //正则匹配 h1-h6 作为锚点标题
@@ -113,7 +112,13 @@ export default function Article(props) {
                   dangerouslySetInnerHTML={{ __html: newContent }}
                 />
               </article>
-              <Divider style={{height:'2px',backgroundColor:"rgba(227,227,227,0.6)"}}></Divider>
+              <Divider
+                style={{
+                  height: "2px",
+                  backgroundColor: "rgba(227,227,227,0.6)",
+                }}
+              ></Divider>
+              <Discuss {...{ articleId: article.data.articleId }}></Discuss>
             </Col>
             <Col {...navigationLayout}>
               <Navigation list={list}></Navigation>
@@ -128,9 +133,8 @@ export default function Article(props) {
 }
 
 export async function getServerSideProps(context) {
-  const data = await axios.get(`/article/detail?id=${context.query.id||1}`);
+  const data = await axios.get(`/article/detail?id=${context.query.id || 1}`);
   return {
     props: { article: data },
   };
 }
-
