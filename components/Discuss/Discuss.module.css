@@ -1,0 +1,16 @@
+.discussItem{
+    /* border: 1px solid rgba(210,210,210,0.6); */
+     box-shadow:4px 2px 6px  rgba(139, 139, 139, 0.5);
+    border-radius: 4px;
+    margin-bottom: 10px;
+    min-height: 100px;
+}
+
+.sumbitButton{
+    position: absolute;
+    background-color: skyblue;
+    border: 1px solid skyblue;
+    right:0px;
+    top:0px;
+    border-radius: 4px;
+}
