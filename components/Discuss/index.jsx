@@ -13,10 +13,7 @@ import style from "./Discuss.module.css";
 import Image from "next/image";
 import axios from "../../utils/axios";
 import qs from "qs";
-// const comment = [
-//   { content: "yyds", time: "2022/5/20" },
-//   { content: "Less is more ", time: "2022/5/20" },
-// ];
+import useRequestLoading from "../../hooks/useAjaxLoading";
 
 const { TextArea } = Input;
 const Editor = ({ onChange, onSubmit, submitting, value }) => {
@@ -48,12 +45,16 @@ const Discuss = (props) => {
   const { articleId } = props;
   const [value, setValue] = useState("");
   const [comment, setComment] = useState([]);
-  console.log(qs.stringify({ articleId }));
+  const [submitting, withLoading] = useRequestLoading();
+
   useEffect(() => {
     async function getComment() {
-      const data = await axios.post("/comment", qs.stringify({ articleId }));
+      const data = await axios.post(
+        "/comment/list",
+        qs.stringify({ articleId })
+      );
       if (data.status === 0) {
-        console.log(data.data)
+        console.log(data.data);
         setComment(data.data);
       } else {
         message.error(data.msg);
@@ -62,7 +63,20 @@ const Discuss = (props) => {
     getComment();
   }, [articleId]);
 
-  function handleSubmit() {}
+  function handleSubmit() {
+    if (!value) return message.warn("消息不能为空");
+
+    withLoading(
+      axios.post("/comment/add", qs.stringify({ articleId, content: value }))
+    ).then((res) => {
+      setValue("");
+      if (res.status === 0) {
+        setComment([...comment, res.data]);
+      } else {
+        message.error(res.msg);
+      }
+    });
+  }
 
   return (
     <div className="discuss">
@@ -83,7 +97,14 @@ const Discuss = (props) => {
             size={60}
           ></Avatar>
         }
-        content={<Editor></Editor>}
+        content={
+          <Editor
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            submitting={submitting}
+            onSubmit={handleSubmit}
+          ></Editor>
+        }
       ></Comment>
 
       {comment.length !== 0 ? (

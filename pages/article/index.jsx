@@ -7,6 +7,7 @@ import Navigation from "../../components/Navigation";
 import axios from "../../utils/axios";
 import Discuss from "../../components/Discuss";
 
+
 function getAnchorList(str) {
   const pattern = /<(h[1-6])[\s\S]+?(?=<\/\1>)/g; //正则匹配 h1-h6 作为锚点标题
   const list = [];
@@ -45,9 +46,8 @@ function getAnchorList(str) {
 const navigationLayout = { xxl: 4, xl: 3, lg: 3, sm: 0, xs: 0 };
 
 export default function Article(props) {
-  const [loading, setLoading] = useState(true);
-  // const { title, content, tags, categories, comments, time, viewCount } =
-  //   article;
+  const [loading, setLoading] = useState(false);
+
   const { article } = props;
   const [list, newContent] = getAnchorList(article.data.content);
   useEffect(() => {
