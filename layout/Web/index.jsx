@@ -1,5 +1,4 @@
-
-import { Row, Col, BackTopmButton } from "antd";
+import { Row, Col } from "antd";
 import style from "./Web.module.css";
 import BlogHeader from "./header";
 import LeftNav from "./leftNav";
@@ -8,9 +7,7 @@ import LeftNav from "./leftNav";
 const siderLayout = { xxl: 4, xl: 4, lg: 4, sm: 0, xs: 0 };
 const contentLayout = { xxl: 16, xl: 13, lg: 13, sm: 20, xs: 20 };
 
-
 export default function Web({ children }) {
-
   return (
     <div className={style.content}>
       <Row>
@@ -23,7 +20,6 @@ export default function Web({ children }) {
           <LeftNav></LeftNav>
         </Col>
         <Col offset={6} {...contentLayout}>
-
           {children}
         </Col>
       </Row>

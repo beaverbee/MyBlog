@@ -3,7 +3,6 @@ import {
   Comment,
   Avatar,
   Tooltip,
-  Divider,
   Input,
   Form,
   Button,
@@ -14,9 +13,8 @@ import Image from "next/image";
 import axios from "../../utils/axios";
 import qs from "qs";
 import useRequestLoading from "../../hooks/useAjaxLoading";
-const IP_URL = "https://restapi.amap.com/v3/ip?"; //IP api请求url
-export const KEY = "602d9e141dd2898214373b04d65121a8"; //高德地图个人key
-
+import { useBus } from "../../hooks/useBus";
+import { useCity } from "../../hooks/useCity";
 const { TextArea } = Input;
 const Editor = ({ onChange, onSubmit, submitting, value }) => {
   return (
@@ -48,7 +46,12 @@ const Discuss = (props) => {
   const [value, setValue] = useState("");
   const [comment, setComment] = useState([]);
   const [submitting, withLoading] = useRequestLoading();
-  const [userCity, setUserCity] = useState("M78星云");
+  const {
+    state: {
+      params: { city },
+    },
+    dispatch,
+  } = useBus();
   useEffect(() => {
     async function getComment() {
       const data = await axios.post(
@@ -61,21 +64,17 @@ const Discuss = (props) => {
         message.error(data.msg);
       }
     }
-    async function getCity() {
-      const data = await axios.get(IP_URL + "key=" + KEY);
-      console.log(data)
-      if (data.status === '1') {
-        setUserCity(data.city);
-      }
-    }
-    getComment();
-    getCity();
-  }, [articleId]);
 
+    getComment();
+  }, [articleId]);
+  useCity(dispatch);
   function handleSubmit() {
     if (!value) return message.warn("消息不能为空");
     withLoading(
-      axios.post("/comment/add", qs.stringify({ articleId, content: value,city:userCity }))
+      axios.post(
+        "/comment/add",
+        qs.stringify({ articleId, content: value, city })
+      )
     ).then((res) => {
       setValue("");
       if (res.status === 0) {
@@ -111,7 +110,6 @@ const Discuss = (props) => {
             onChange={(e) => setValue(e.target.value)}
             submitting={submitting}
             onSubmit={handleSubmit}
-            userCity={userCity}
           ></Editor>
         }
       ></Comment>
