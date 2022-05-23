@@ -64,7 +64,6 @@ router.post("/comment/list", (req, res) => {
   setHeader(res);
   CommentModel.find({ articleId })
     .then((comments) => {
-      console.log(comments);
       res.send({ status: 0, data: comments });
     })
     .catch((error) => {
@@ -74,9 +73,9 @@ router.post("/comment/list", (req, res) => {
 });
 
 router.post("/comment/add", (req, res) => {
-  const { articleId, content } = qs.parse(req.body);
+  const { articleId, content,city } = qs.parse(req.body);
   setHeader(res);
-  CommentModel.create({ content, articleId })
+  CommentModel.create({ content, articleId,city })
     .then((comments) => {
       res.send({ status: 0, data: comments });
     })

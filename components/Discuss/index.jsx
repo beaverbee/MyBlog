@@ -14,6 +14,8 @@ import Image from "next/image";
 import axios from "../../utils/axios";
 import qs from "qs";
 import useRequestLoading from "../../hooks/useAjaxLoading";
+const IP_URL = "https://restapi.amap.com/v3/ip?"; //IP api请求url
+export const KEY = "602d9e141dd2898214373b04d65121a8"; //高德地图个人key
 
 const { TextArea } = Input;
 const Editor = ({ onChange, onSubmit, submitting, value }) => {
@@ -46,7 +48,7 @@ const Discuss = (props) => {
   const [value, setValue] = useState("");
   const [comment, setComment] = useState([]);
   const [submitting, withLoading] = useRequestLoading();
-
+  const [userCity, setUserCity] = useState("M78星云");
   useEffect(() => {
     async function getComment() {
       const data = await axios.post(
@@ -54,20 +56,26 @@ const Discuss = (props) => {
         qs.stringify({ articleId })
       );
       if (data.status === 0) {
-        console.log(data.data);
         setComment(data.data);
       } else {
         message.error(data.msg);
       }
     }
+    async function getCity() {
+      const data = await axios.get(IP_URL + "key=" + KEY);
+      console.log(data)
+      if (data.status === '1') {
+        setUserCity(data.city);
+      }
+    }
     getComment();
+    getCity();
   }, [articleId]);
 
   function handleSubmit() {
     if (!value) return message.warn("消息不能为空");
-
     withLoading(
-      axios.post("/comment/add", qs.stringify({ articleId, content: value }))
+      axios.post("/comment/add", qs.stringify({ articleId, content: value,city:userCity }))
     ).then((res) => {
       setValue("");
       if (res.status === 0) {
@@ -103,6 +111,7 @@ const Discuss = (props) => {
             onChange={(e) => setValue(e.target.value)}
             submitting={submitting}
             onSubmit={handleSubmit}
+            userCity={userCity}
           ></Editor>
         }
       ></Comment>
@@ -112,7 +121,11 @@ const Discuss = (props) => {
           return (
             <div key={com._id} className={style.discussItem}>
               <Comment
-                author={<span style={{ fontSize: "1rem" }}>visitor</span>}
+                author={
+                  <span style={{ fontSize: "1rem" }}>
+                    {com.city ? `${com.city}的小伙伴` : "M78星云的小伙伴"}
+                  </span>
+                }
                 avatar={
                   <Avatar
                     src={

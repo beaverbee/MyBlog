@@ -63,3 +63,18 @@
   -moz-osx-font-smoothing: grayscale;
   color: white;
 }
+
+.button{
+  width: 400px !important;
+  height: 35px;
+  font-size: 1rem;
+  position: relative;
+  left: 15%;
+}
+
+.headerButton{
+  display: flex;
+  align-items: center;
+  height: 100%;
+  
+}
