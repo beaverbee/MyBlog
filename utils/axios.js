@@ -16,12 +16,12 @@ const service = axios.create({
 });
 
 service.interceptors.request.use((config) => {
-if (config.method === "post") {
-  // 修改 Content-Type
-  config.headers["Content-Type"] =
-    "application/x-www-form-urlencoded;charset=UTF-8";
-}
-return config;
+  if (config.method === "post") {
+    // 修改 Content-Type
+    config.headers["Content-Type"] =
+      "application/x-www-form-urlencoded;charset=UTF-8";
+  }
+  return config;
 });
 
 let timer;
@@ -40,7 +40,7 @@ service.interceptors.response.use(
             message.error("登录信息过期或未授权，请重新登录！");
             break;
           default:
-            message.error(status + "连接错误");
+            message.error("异次元连接失败，请稍后");
             break;
         }
       }

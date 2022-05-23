@@ -1,6 +1,6 @@
 const express = require("express");
 const md5 = require("blueimp-md5");
-const qs=require('qs')
+const qs = require("qs");
 const TagModel = require("../Models/TagModel");
 const ArticleModel = require("../Models/ArticleModel");
 const CommentModel = require("../Models/CommentModel");
@@ -14,7 +14,6 @@ const setHeader = (res) => {
     "Access-Control-Allow-Methods",
     "POST, GET, OPTIONS, DELETE, PUT"
   );
- 
 };
 
 router.post("/tag/list", (req, res) => {
@@ -60,17 +59,27 @@ router.get("/article/detail", (req, res) => {
 });
 
 // 获得评论列表
-router.post("/comment", (req, res) => {
+router.post("/comment/list", (req, res) => {
   const { articleId } = qs.parse(req.body);
   setHeader(res);
-  console.log(articleId)
   CommentModel.find({ articleId })
     .then((comments) => {
-      console.log(comments);
       res.send({ status: 0, data: comments });
     })
     .catch((error) => {
       console.log("数据库出错");
+      res.send({ status: 1, msg: "评论被封印了，博主施法拯救中····" });
+    });
+});
+
+router.post("/comment/add", (req, res) => {
+  const { articleId, content,city } = qs.parse(req.body);
+  setHeader(res);
+  CommentModel.create({ content, articleId,city })
+    .then((comments) => {
+      res.send({ status: 0, data: comments });
+    })
+    .catch((error) => {
       res.send({ status: 1, msg: "评论被封印了，博主施法拯救中····" });
     });
 });
