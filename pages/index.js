@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Web from "../layout/Web";
@@ -7,7 +6,7 @@ import { memo, useEffect, useState } from "react";
 import { useBus } from "../hooks/useBus";
 import axios from "../utils/axios";
 import ArticleList from "../components/ArticleList";
-import { GET_CITY } from "../utils/constant";
+import { SET_VISIT } from "../utils/constant";
 
 const Home = memo(function MyHome(props) {
   const [instance, setInstance] = useState(true);
@@ -21,9 +20,11 @@ const Home = memo(function MyHome(props) {
   useEffect(() => {
     setTimeout(() => {
       setInstance(false);
-    }, 5000);
-    dispatch({ type: GET_CITY, value: false });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, 6000);
+    return () => {
+      dispatch({ type: SET_VISIT, value: false });
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className={styles.container}>
