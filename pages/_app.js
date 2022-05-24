@@ -4,8 +4,28 @@ import "antd/dist/antd.css";
 import Head from "next/head";
 import Script from "next/script";
 import { Provider } from "../hooks/useBus";
-
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { reducers, store } from "../utils/reducer";
+import { useReducer } from "react";
+import { SET_LOADING } from "../utils/constant";
 function MyApp({ Component, pageProps }) {
+  const router = useRouter();
+  const [state, dispatch] = useReducer(reducers, store);
+  useEffect(() => {
+    const handleRouteChangeStart = () => {
+      dispatch({ type: SET_LOADING, value: true });
+    };
+    const handleRouterChangedComplete = () => {
+      dispatch({ type: SET_LOADING, value: false });
+    };
+    router.events.on("routeChangeStart", handleRouteChangeStart);
+    router.events.on("routeChangeComplete", handleRouterChangedComplete);
+    return () => {
+      router.events.off("routeChangeStart", handleRouteChangeStart);
+      router.events.off("routeChangeComplete", handleRouterChangedComplete);
+    };
+  }, []);
   return (
     <div>
       <Head>
@@ -19,7 +39,7 @@ function MyApp({ Component, pageProps }) {
       <Script src="/js/easeljs.min.js" strategy="beforeInteractive"></Script>
       <Script src="/js/cicleMove.js" strategy="beforeInteractive"></Script>
       <Script src="/js/cicleLineCanvas.js"></Script>
-      <Provider>
+      <Provider {...{ state, dispatch }}>
         <Component {...pageProps} />
       </Provider>
     </div>

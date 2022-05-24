@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Layout, Row, Col, Button, Modal, Form, Input } from "antd";
 import style from "./header.module.css";
 import Image from "next/image";
-
-const { Header } = Layout;
 import { useRouter } from "next/router";
 
+
+const { Header } = Layout;
 const title = [
   { title: "首页", icon: "iconfont icon-home-fill", path: "/" },
   { title: "文章列表", icon: "iconfont icon-format_points", path: "/article" },
@@ -20,7 +20,7 @@ export default function BlogHeader(props) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const routerSwitch = (path) => {
     if (path) {
-      router.push(path);
+        router.push(path);      
     } else {
       window.location.href = "https://github.com/beaverbee";
     }
@@ -64,7 +64,7 @@ export default function BlogHeader(props) {
         </Col>
         <Col span={3} offset={3}>
           <div className={style.headerButton}>
-            <Button ghost onClick={onLoginIn} style={{marginRight:"10px"}}>
+            <Button ghost onClick={onLoginIn} style={{ marginRight: "10px" }}>
               {login === -1 ? "登录" : "退出"}
             </Button>
             {login === -1 ? <Button ghost>后台管理</Button> : undefined}
