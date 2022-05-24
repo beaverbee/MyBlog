@@ -1,13 +1,5 @@
-import { useState, useEffect } from "react";
-import {
-  Comment,
-  Avatar,
-  Tooltip,
-  Input,
-  Form,
-  Button,
-  message,
-} from "antd";
+import { useState, useEffect, Fragment } from "react";
+import { Comment, Avatar, Tooltip, Input, Form, Button, message } from "antd";
 import style from "./Discuss.module.css";
 import Image from "next/image";
 import axios from "../../utils/axios";
@@ -18,7 +10,7 @@ import { useCity } from "../../hooks/useCity";
 const { TextArea } = Input;
 const Editor = ({ onChange, onSubmit, submitting, value }) => {
   return (
-    <div>
+    <Fragment>
       <Form.Item>
         <TextArea
           rows={5}
@@ -37,7 +29,7 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => {
           添加评论
         </Button>
       </Form.Item>
-    </div>
+    </Fragment>
   );
 };
 
