@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { reducers, store } from "../utils/reducer";
 import { useReducer } from "react";
-import { SET_LOADING } from "../utils/constant";
+import { SET_LOADING } from "../config";
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [state, dispatch] = useReducer(reducers, store);

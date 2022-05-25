@@ -1,0 +1,48 @@
+.nav{
+    position: fixed;
+    width: 200px;
+}
+
+.menu{ 
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    width: 250px;
+    height: 100vh;
+    background-color: rgb(58, 65, 68);
+}
+
+.profile{
+    border-radius: 150px;
+    margin-bottom: 40px;
+}
+
+.menuItem{
+    margin-top: 10px;
+    position: relative;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    color: white;
+    font-size: 22px;  
+    cursor: pointer;
+    width: 100%;
+    top: 5px;
+    font-weight: 500;
+}
+
+.menuItem:hover{
+    top:0px;
+    color: skyblue;
+}
+
+.menuItemSelected{
+    background-color: #fff;
+    color: rgb(36, 36, 36);
+}
+
+.icon{
+    line-height: 38px;
+    margin-right:5px;
+}

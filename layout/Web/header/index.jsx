@@ -67,7 +67,7 @@ export default function BlogHeader(props) {
             <Button ghost onClick={onLoginIn} style={{ marginRight: "10px" }}>
               {login === -1 ? "登录" : "退出"}
             </Button>
-            {login === -1 ? <Button ghost>后台管理</Button> : undefined}
+            {login === -1 ? <Button ghost onClick={()=>{router.push('/admin')}}>后台管理</Button> : undefined}
           </div>
         </Col>
       </Row>

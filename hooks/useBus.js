@@ -1,11 +1,9 @@
 import {
   useContext,
-  useReducer,
   useState,
   useEffect,
   createContext,
 } from "react";
-import { store, reducers } from "../utils/reducer";
 import mitt from "mitt";
 
 export const BusContext = createContext();

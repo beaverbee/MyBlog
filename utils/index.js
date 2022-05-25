@@ -1,4 +1,3 @@
-
 /**
  * @param {string} path
  * @returns {Boolean}
@@ -7,7 +6,6 @@
 export function isExternal(path) {
   return /^(https?:|mailto:|tel:|http:)/.test(path);
 }
-
 
 /**
  * 对数组进行分组
@@ -24,3 +22,18 @@ export const groupBy = (arr, f) => {
   });
   return Object.keys(groups).map((group) => groups[group]);
 };
+
+/**
+ * 用于对列表数据进行解析
+ * 将传参转换为对象
+ * @param any
+ * @returns {Object}
+ */
+export function getItem(label, key, icon, children) {
+  return {
+    key,
+    icon,
+    children,
+    label,
+  };
+}

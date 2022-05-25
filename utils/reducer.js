@@ -3,7 +3,7 @@
  * 如果想实现多reducer的管理 store的数据名称要和 reducer的名称一致
  */
 
-import { GET_CITY, SET_VISIT, LOGIN, REGISTER, SET_LOADING } from "./constant";
+import { GET_CITY, SET_VISIT, LOGIN, REGISTER, SET_LOADING } from "../config";
 
 export const store = {
   user: { name: "", level: -1 },
