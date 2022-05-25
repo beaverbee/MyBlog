@@ -6,7 +6,8 @@ import { memo, useEffect, useState } from "react";
 import { useBus } from "../hooks/useBus";
 import axios from "../utils/axios";
 import ArticleList from "../components/ArticleList";
-import { SET_VISIT } from "../utils/constant";
+import { SET_VISIT } from "../config";
+
 
 const Home = memo(function MyHome(props) {
   const [instance, setInstance] = useState(true);
@@ -26,6 +27,7 @@ const Home = memo(function MyHome(props) {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <div className={styles.container}>
       <Head>

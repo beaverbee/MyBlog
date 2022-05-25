@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { GET_CITY } from "../utils/constant";
+import { GET_CITY } from "../config";
 import axios from '../utils/axios'
 const IP_URL = "https://restapi.amap.com/v3/ip?"; //IP api请求url
 export const KEY = "602d9e141dd2898214373b04d65121a8"; //高德地图个人key

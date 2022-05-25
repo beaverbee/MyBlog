@@ -1,14 +1,13 @@
-
 /**
  * 该文件用于配置store和相应的reducer
  * 如果想实现多reducer的管理 store的数据名称要和 reducer的名称一致
  */
 
-import { GET_CITY, SET_VISIT } from "./constant";
+import { GET_CITY, SET_VISIT, LOGIN, REGISTER, SET_LOADING } from "../config";
 
 export const store = {
   user: { name: "", level: -1 },
-  params: { key: "key", city: "M78星云", firstVisit: true },
+  params: { key: "key", city: "M78星云", firstVisit: true, spinning: false },
 };
 
 //user reducer
@@ -18,14 +17,18 @@ const user = (state, action) => {
       return { ...state, name: action.value };
     case "remove":
       return { ...state, level: action.value };
+    case LOGIN:
+      return 1;
+    case REGISTER:
+      return 1;
   }
 };
 
 // params reducer
 const params = (state, action) => {
   switch (action.type) {
-    case "retrive":
-      return { ...state, key: action.value };
+    case SET_LOADING:
+      return { ...state, spinning: action.value };
     case GET_CITY:
       return { ...state, city: action.value };
     case SET_VISIT:

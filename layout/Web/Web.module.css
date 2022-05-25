@@ -3,16 +3,17 @@
     color: skyblue;
 }
 
-
 .content{
     position: absolute;
-
     width: 100%;
     background-color: rgba(0,0,0,0);
-    
-
 }
 
 .layout{
     background-color: inherit;
+}
+
+.spin{
+    position: relative !important;
+    top:50vh !important;
 }

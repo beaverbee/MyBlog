@@ -1,11 +1,9 @@
 import {
   useContext,
-  useReducer,
   useState,
   useEffect,
   createContext,
 } from "react";
-import { store, reducers } from "../utils/reducer";
 import mitt from "mitt";
 
 export const BusContext = createContext();
@@ -24,9 +22,9 @@ export function useListener(name, fn) {
   }, [bus, name, fn]);
 }
 
-export function Provider({ children }) {
+export function Provider(props) {
+  const { children,state,dispatch } = props;
   const [bus] = useState(() => mitt());
-  const [state, dispatch] = useReducer(reducers, store);
   return (
     <BusContext.Provider value={{ bus, state, dispatch }}>
       {children}

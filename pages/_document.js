@@ -10,9 +10,7 @@ export default function Document() {
       <link rel="stylesheet" href="/assets/icons/iconfont.css"></link>
       <body>
         <Main />
-
         <NextScript />
-
       </body>
     </Html>
   );

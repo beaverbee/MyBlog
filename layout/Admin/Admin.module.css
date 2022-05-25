@@ -1,0 +1,9 @@
+.admin{
+    position: absolute;
+    width: 100%;
+}
+
+.spin{
+    position: relative !important;
+    top:50vh !important;
+}

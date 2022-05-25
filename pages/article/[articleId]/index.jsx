@@ -57,7 +57,6 @@ export default function Article(props) {
       clearTimeout(time);
     };
   }, []);
-
   return (
     <Web>
       <Head>
@@ -132,7 +131,7 @@ export default function Article(props) {
 }
 
 export async function getStaticPaths() {
-  const {data} = await axios.post("/article/list");
+  const { data } = await axios.post("/article/list");
   return {
     paths: data.map((item) => ({ params: { articleId: item.articleId } })),
     fallback: false,

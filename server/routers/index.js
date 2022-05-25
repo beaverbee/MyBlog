@@ -4,6 +4,7 @@ const qs = require("qs");
 const TagModel = require("../Models/TagModel");
 const ArticleModel = require("../Models/ArticleModel");
 const CommentModel = require("../Models/CommentModel");
+const UserModel = require("../Models/UserModel");
 
 const router = express.Router();
 
@@ -73,14 +74,26 @@ router.post("/comment/list", (req, res) => {
 });
 
 router.post("/comment/add", (req, res) => {
-  const { articleId, content,city } = qs.parse(req.body);
+  const { articleId, content, city } = qs.parse(req.body);
   setHeader(res);
-  CommentModel.create({ content, articleId,city })
+  CommentModel.create({ content, articleId, city })
     .then((comments) => {
       res.send({ status: 0, data: comments });
     })
     .catch((error) => {
       res.send({ status: 1, msg: "评论被封印了，博主施法拯救中····" });
+    });
+});
+
+router.post("/user/login", (req, res) => {
+  const { username, password } = qs.parse(req.body);
+  setHeader(res);
+  UserModel.find({ username, password },{username,level})
+    .then((user) => {
+
+    })
+    .catch((error) => {
+      res.send({ status: 1, msg: "用户名或密码错误" });
     });
 });
 
