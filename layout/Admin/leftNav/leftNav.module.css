@@ -20,6 +20,7 @@
 
 .menuItem{
     margin-top: 10px;
+    padding-top:10px;
     position: relative;
     height: 60px;
     display: flex;
@@ -45,4 +46,9 @@
 .icon{
     line-height: 38px;
     margin-right:5px;
+}
+
+.selected{
+    background-color: white;
+    color: rgb(36, 36, 36);
 }

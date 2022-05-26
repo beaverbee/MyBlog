@@ -1,13 +1,14 @@
- .timeline{
+.timeline{
    position:relative;
    top:20;
  }
+ 
  
  .desc {
     font-size: 20px;
     font-weight: 600;
     position: relative;
-    top: 20px;
+    /* top: 40px; */
   }
 
 .year {
@@ -15,10 +16,4 @@
     font-weight: 600;
     position: relative;
     top: -5px;
-}
-
-.link{
-    margin-left: 10px;
-    cursor: pointer;
-    font-size: 16px;
 }

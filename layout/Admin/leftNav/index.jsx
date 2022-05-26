@@ -1,31 +1,15 @@
-import {
-  UnorderedListOutlined,
-  EditOutlined,
-  FormOutlined,
-  RollbackOutlined,
-} from "@ant-design/icons";
 import Image from "next/image";
 import style from "./leftNav.module.css";
-import { getItem } from "../../../utils";
 import { useRouter } from "next/dist/client/router";
+import { useBackStage } from "../../../hooks/useBackStage";
 
-const menusList = [
-  getItem(
-    "文章列表",
-    "/admin/list",
-    <UnorderedListOutlined className={style.icon} />
-  ),
-  getItem("修改文章", "/admin/editor", <EditOutlined className={style.icon} />),
-  getItem("新建文章", "/admin/create", <FormOutlined className={style.icon} />),
-  getItem("返回博客", "/", <RollbackOutlined className={style.icon} />),
-];
 
 const LeftNav = () => {
+  const { menusList } = useBackStage();
   const router = useRouter();
   const onClick = (key) => {
     router.push(key);
   };
-
   return (
     <div className={style.nav}>
       <ul className={style.menu}>
@@ -42,8 +26,8 @@ const LeftNav = () => {
         {menusList.map((menu) => (
           <li
             key={menu.key}
-            className={style.menuItem}
-            onClick={() => {
+            className={`${style.menuItem} ${router.pathname==menu.key?style.selected:undefined}`}
+            onClick={(e) => {
               onClick(menu.key);
             }}
           >

@@ -1,7 +1,11 @@
 import LeftNav from "./leftNav";
 import style from "./Admin.module.css";
-import { Row, Col, Spin } from "antd";
+import { Row, Col, Spin, message } from "antd";
+import Header from "./header";
 import { useBus } from "../../hooks/useBus";
+import { useEffect, useState } from "react";
+import { Provider } from "../../hooks/useBackStage";
+import axios from "../../utils/axios";
 
 export default function BackStage({ children }) {
   const {
@@ -9,18 +13,41 @@ export default function BackStage({ children }) {
       params: { spinning },
     },
   } = useBus();
+  const [logList, setLogList] = useState([]);
+  useEffect(() => {
+    async function getLog() {
+      const data = await axios.post("/admin/log");
+      if (data.status == 0) {
+        setLogList(data.data);
+      } else {
+        message.error("服务器出问题了，赶紧去维护");
+      }
+    }
+    getLog();
+  }, []);
   return (
-    <Spin spinning={spinning} className={style.spin} tip="Loading" size="large" delay={500}>
-      <div className={style.admin}>
-        <Row>
-          <Col span={2}>
-            <LeftNav></LeftNav>
-          </Col>
-          <Col span={16} offset={2}>
-            {children}
-          </Col>
-        </Row>
-      </div>
-    </Spin>
+    <Provider logList={logList}>
+      <Spin
+        spinning={spinning}
+        className={style.spin}
+        tip="Loading"
+        size="large"
+        delay={500}
+      >
+        <div className={style.admin}>
+          <Row>
+            <Col span={2}>
+              <LeftNav></LeftNav>
+            </Col>
+            <Col span={18} offset={2}>
+              <Row>
+                <Header></Header>
+              </Row>
+              <Row>{children}</Row>
+            </Col>
+          </Row>
+        </div>
+      </Spin>
+    </Provider>
   );
 }

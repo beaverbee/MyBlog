@@ -20,7 +20,15 @@ export const groupBy = (arr, f) => {
     groups[group] = groups[group] || [];
     groups[group].push(item);
   });
-  return Object.keys(groups).map((group) => groups[group]);
+  const res = Object.keys(groups).map((group) => groups[group]);
+  res.sort((a, b) => {
+    if (b[0].time >= a[0].time) {
+      return 1;
+    } else {
+      return -1;
+    }
+  });
+  return res;
 };
 
 /**
