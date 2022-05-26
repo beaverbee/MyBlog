@@ -1,6 +1,7 @@
 import BackStage from "../../layout/Admin";
 import Head from "next/head";
 
+
 export default function Admin() {
   return (
     <BackStage>

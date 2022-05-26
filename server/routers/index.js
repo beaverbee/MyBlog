@@ -5,6 +5,7 @@ const TagModel = require("../Models/TagModel");
 const ArticleModel = require("../Models/ArticleModel");
 const CommentModel = require("../Models/CommentModel");
 const UserModel = require("../Models/UserModel");
+const LogModel = require("../Models/LogModel");
 
 const router = express.Router();
 
@@ -88,12 +89,21 @@ router.post("/comment/add", (req, res) => {
 router.post("/user/login", (req, res) => {
   const { username, password } = qs.parse(req.body);
   setHeader(res);
-  UserModel.find({ username, password },{username,level})
-    .then((user) => {
-
-    })
+  UserModel.find({ username, password }, { username, level })
+    .then((user) => {})
     .catch((error) => {
       res.send({ status: 1, msg: "用户名或密码错误" });
+    });
+});
+
+router.post("/admin/log", (req, res) => {
+  setHeader(res);
+  LogModel.find()
+    .then((logs) => {
+      res.send({ status: 0, data: logs });
+    })
+    .catch(() => {
+      res.send({ status: 1, msg: "后台访问错误" });
     });
 });
 

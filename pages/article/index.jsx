@@ -29,7 +29,7 @@ export default function Article(props) {
       </Head>
 
       {data.status === 0 ? (
-        <Timeline>
+        <Timeline className={style.timeline}>
           <Timeline.Item>
             <span
               className={style.desc}

@@ -1,4 +1,13 @@
-export const API_BASE_URL='http://localhost:6060'
+import {
+  UnorderedListOutlined,
+  EditOutlined,
+  FormOutlined,
+  RollbackOutlined,
+} from "@ant-design/icons";
+import { getItem } from '../utils';
+import style from '../layout/Admin/leftNav/leftNav.module.css'
+
+export const API_BASE_URL = "http://localhost:6060";
 
 //reducer action
 export const GET_CITY = "getCity";
@@ -7,3 +16,17 @@ export const SET_LOADING = "serLoading";
 
 export const LOGIN = "login";
 export const REGISTER = "register";
+
+export const menusList = [
+  getItem(
+    "文章列表",
+    "/admin/list",
+    <UnorderedListOutlined className={style.icon} />
+  ),
+  getItem("博客日志", "/admin/log", <EditOutlined className={style.icon}/>),
+  getItem("新建文章", "/admin/create", <FormOutlined className={style.icon} />),
+  getItem("返回博客", "/", <RollbackOutlined className={style.icon} />),
+];
+
+
+export const actionMap={create:'发表',delete:'删除',edit:'修改'}
