@@ -6,41 +6,10 @@ import { Spin, Divider, Tag, Row, Col } from "antd";
 import Navigation from "../../../components/Navigation";
 import axios from "../../../utils/axios";
 import Discuss from "../../../components/Discuss";
+import Content from "../../../components/Content";
+import getAnchorList from '../../../utils'
 
-function getAnchorList(str) {
-  const pattern = /<(h[1-6])[\s\S]+?(?=<\/\1>)/g; //正则匹配 h1-h6 作为锚点标题
-  const list = [];
-  function pushItem(arr, item) {
-    const len = arr.length;
-    const matchItem = arr[len - 1];
-    if (matchItem && matchItem.tag !== item.tag) {
-      pushItem(matchItem.children, item);
-    } else {
-      arr.push(item);
-      // debugger
-    }
-  }
-  let newStr = str.replace(pattern, ($0, $1) => {
-    const endIndex = $0.indexOf("</");
-    const startIndex = $0
-      .substring(0, endIndex === -1 ? undefined : endIndex)
-      .lastIndexOf(">");
-    const title = `${$0.substring(
-      startIndex + 1,
-      endIndex === -1 ? undefined : endIndex
-    )}`;
-    const href = `#${title}`;
-    const currentItem = {
-      tag: $1, // 标签类型
-      title,
-      href,
-      children: [],
-    };
-    pushItem(list, currentItem);
-    return `<${$1 + " id='" + title + "'" + $0.substring(3)}`;
-  });
-  return [list, newStr];
-}
+
 
 const navigationLayout = { xxl: 4, xl: 3, lg: 3, sm: 0, xs: 0 };
 
@@ -61,7 +30,6 @@ export default function Article(props) {
     <Web>
       <Head>
         <title>{`My Blog: ${article.data.title}`}</title>
-
         <meta
           name="description"
           content="This is Blog project based on React.js and Next.js"
@@ -71,45 +39,7 @@ export default function Article(props) {
         {article.status === 0 ? (
           <Row>
             <Col span={18}>
-              <article>
-                <div className={styles.postHeader}>
-                  <div className={styles.title}>{article.data.title}</div>
-                  <div
-                    className={styles.subInformation}
-                    style={{ fontSize: "1rem" }}
-                  >
-                    <span className="iconfont icon-date"></span>
-                    <span>{`Posted On ${article.data.time}`}</span>
-                    <Divider
-                      type="vertical"
-                      className={styles.divider}
-                    ></Divider>
-                    <span className="iconfont icon-post"></span>
-                    <span>
-                      {article.data.tags.map((item, index) => {
-                        return (
-                          <Tag
-                            key={index}
-                            color="blue"
-                            style={{ fontSize: "1rem" }}
-                          >
-                            {item}
-                          </Tag>
-                        );
-                      })}
-                    </span>
-                    <Divider
-                      type="vertical"
-                      className={styles.divider}
-                    ></Divider>
-                  </div>
-                </div>
-                <Divider></Divider>
-                <div
-                  className={styles.articleDetail}
-                  dangerouslySetInnerHTML={{ __html: newContent }}
-                />
-              </article>
+              <Content {...{ article:article.data, newContent }}></Content>
               <Divider
                 style={{
                   height: "2px",

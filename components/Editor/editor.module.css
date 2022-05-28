@@ -1,0 +1,40 @@
+.content{
+    min-height: 75vh;
+    height: 75vh !important;
+    width: 35vw !important;
+    border: 2px solid rgb(84, 89, 92);
+    border-radius:10px;
+    box-shadow: 10px 15px 30px 0 rgba(0,0,0,0.2);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: box-shadow 0.5s ease;
+}
+/* first-child 和 first-of-type的区别 
+   yyy x:first-child 更严格 yyy下第一个子元素是否为x
+   yyy x:first-of-type yyy下第一个x 
+*/
+.content:hover{
+    box-shadow: 15px 20px 30px 0 rgba(0,0,0,0.5) !important;
+    border: 2px solid rgb(142, 204, 243) !important;
+}
+
+.textarea:focus{
+    border: 2px solid rgb(84, 89, 92);
+    box-shadow: 10px 15px 30px 0 rgba(0,0,0,0.2);
+}
+
+.function{
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    margin-top: -10px;
+}
+
+.function button{
+    min-width: 100px
+}
+
