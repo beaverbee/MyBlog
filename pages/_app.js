@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-before-interactive-script-outside-document */
 import "../styles/globals.css";
 import "antd/dist/antd.css";
+
 import Head from "next/head";
 import Script from "next/script";
 import { Provider } from "../hooks/useBus";

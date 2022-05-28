@@ -39,11 +39,13 @@ export default function BackStage({ children }) {
             <Col span={2}>
               <LeftNav></LeftNav>
             </Col>
-            <Col span={18} offset={2}>
+            <Col span={19} offset={2}>
               <Row>
                 <Header></Header>
               </Row>
-              <Row>{children}</Row>
+              <Row className={style.content}>
+                <Col span={24}>{children}</Col>
+              </Row>
             </Col>
           </Row>
         </div>

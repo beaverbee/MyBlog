@@ -1,6 +1,8 @@
 .timeline{
    position:relative;
-   top:20;
+   top:10px;
+   left:-6px;
+   margin-bottom: 10px;
  }
  
  
