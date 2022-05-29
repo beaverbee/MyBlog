@@ -1,5 +1,6 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
+
 import Web from "../layout/Web";
 import TypeItCompoment from "../components/typeit";
 import { memo, useEffect, useState } from "react";

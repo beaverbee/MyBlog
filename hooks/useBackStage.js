@@ -8,9 +8,9 @@ export function useBackStage() {
 }
 
 export function Provider(props) {
-  const { children,logList } = props;
+  const { children } = props;
   return (
-    <menuContext.Provider value={{ menusList, logList }}>
+    <menuContext.Provider value={{ ...props, menusList }}>
       {children}
     </menuContext.Provider>
   );
