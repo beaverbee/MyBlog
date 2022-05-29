@@ -1,12 +1,17 @@
-import { Fragment } from "react";
 import { useState } from "react";
-// import { translateMarkdown } from "../../../utils";
-import { Input, Row, Col, Form, Button, message, Spin } from "antd";
+import { Input, Row, Col, Form, Button, message, Spin, Modal } from "antd";
+import { WarningTwoTone } from "@ant-design/icons";
 import style from "./editor.module.css";
 import Content from "../Content";
 import { translateMarkdown } from "../../utils";
-import "highlight.js/styles/monokai-sublime.css";
+import "highlight.js/styles/atom-one-light.css";
 import useRequestLoading from "../../hooks/useAjaxLoading";
+import moment from "moment";
+import axios from "../../utils/axios";
+import { nanoid } from "nanoid";
+import qs from "qs";
+import { useRouter } from "next/router";
+import { useBackStage } from "../../hooks/useBackStage";
 
 const { TextArea } = Input;
 const { useForm } = Form;
@@ -14,21 +19,78 @@ const { useForm } = Form;
 const content = { title: "111", desc: "111", tags: "Node#JavaScript" };
 
 export default function Editor(props) {
+  const { isEdit } = useBackStage();
   const [clear, setClear] = useState(true);
   const [contentForm] = useForm();
   const [htmlContent, sethtmlContent] = useState("");
   const [loading, withloading] = useRequestLoading();
-
+  const [visible, setVisible] = useState(false);
+  const [subInformation, setSubInformation] = useState({});
+  const router = useRouter();
   function clearContent() {
     setClear(true);
+    setVisible(false);
+    contentForm.setFieldsValue({ title: "", desc: "", tags: "", content: "" });
   }
 
   function submitContent() {
     withloading(contentForm.validateFields())
       .then((value) => {
-        const html = translateMarkdown(value.content);
-        sethtmlContent(html);
-        message.success("文章发表成功");
+        const { title, desc } = value;
+        const tags = value.tags.split("#");
+        const htmlContent = translateMarkdown(value.content);
+        const time = moment().format("YYYY-MM-DD");
+        return axios.post(
+          "/article/create",
+          qs.stringify({
+            title,
+            desc,
+            time,
+            content: htmlContent,
+            tags,
+            articleId: nanoid(),
+          })
+        );
+      })
+      .then((value) => {
+        if (value.status === 0) {
+          message.success(`文章${isEdit ? "修改" : "发表"}成功`);
+          axios.post(
+            "/log/create",
+            qs.stringify({
+              action: isEdit ? "edit" : "create",
+              time: moment().format("YYYY-MM-DD"),
+              title: value.data.title,
+            })
+          );
+          router.push(`/article/${value.data.articleId}`);
+        } else {
+          message.error(value.msg);
+        }
+      })
+      .catch((error) => {
+        if (error.errorFields) {
+          for (const e of error.errorFields) {
+            message.warn(e.errors);
+          }
+        } else {
+          console.log(error);
+        }
+      });
+  }
+
+  function previewContent() {
+    withloading(contentForm.validateFields())
+      .then((value) => {
+        sethtmlContent(translateMarkdown(value.content));
+        const tags = value.tags.split("#");
+        setSubInformation({
+          title: value.title,
+          desc: value.desc,
+          tags,
+          time: moment().format("YYYY-MM-DD"),
+        });
+        setClear(false);
       })
       .catch((error) => {
         for (const e of error.errorFields) {
@@ -36,8 +98,6 @@ export default function Editor(props) {
         }
       });
   }
-
-  function previewContent() {}
 
   return (
     <Spin spinning={loading} delay={500}>
@@ -55,7 +115,7 @@ export default function Editor(props) {
               name="title"
               rules={[{ required: true, message: "请填写文章标题" }]}
             >
-              <Input></Input>
+              <Input placeholder="文章标题"></Input>
             </Form.Item>
             <Form.Item
               label="简介"
@@ -83,7 +143,7 @@ export default function Editor(props) {
             </Form.Item>
           </Form>
         </Col>
-        <Col span={10} offset={1}>
+        <Col span={12} offset={0}>
           <div className={style.function}>
             <Button type="primary" onClick={previewContent}>
               预览
@@ -91,19 +151,41 @@ export default function Editor(props) {
             <Button type="loading" onClick={submitContent}>
               提交
             </Button>
-            <Button type="danger" onClick={clearContent}>
+            <Button
+              type="danger"
+              onClick={() => {
+                setVisible(true);
+              }}
+            >
               一键清空
             </Button>
           </div>
           <div className={style.content}>
             {clear ? (
-              <div dangerouslySetInnerHTML={{ __html: htmlContent }}></div>
+              <div className={style.clear}>未生成预览</div>
             ) : (
-              <Content {...{}}></Content>
+              <Content
+                {...{ article: subInformation, content: htmlContent }}
+              ></Content>
             )}
           </div>
         </Col>
       </Row>
+      <Modal
+        visible={visible}
+        title={
+          <WarningTwoTone twoToneColor="orange" style={{ fontSize: "20px" }} />
+        }
+        onCancel={() => {
+          setVisible(false);
+        }}
+        cancelText="取消"
+        onOk={clearContent}
+        okText="清空"
+        closable={false}
+      >
+        该操作无法撤回，是否清空所有内容
+      </Modal>
     </Spin>
   );
 }

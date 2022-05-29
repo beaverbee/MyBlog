@@ -1,6 +1,7 @@
 import { marked } from "marked";
 import xss from "xss";
-import hljs from 'highlight.js'
+import hljs from "highlight.js";
+
 
 /**
  * @param {string} path
@@ -15,7 +16,7 @@ export function isExternal(path) {
  * 对数组进行分组
  * @param {Array} arr - 分组对象
  * @param {Function} f
- * @returns 数组分组后的新数组
+ * @returns 数组分组后的新数组,并且按时间顺序排列
  */
 export const groupBy = (arr, f) => {
   const groups = {};
@@ -32,6 +33,15 @@ export const groupBy = (arr, f) => {
       return -1;
     }
   });
+  for (const year of res) {
+    year.sort((a, b) => {
+      if (b.time > a.time) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
+  }
   return res;
 };
 
@@ -67,38 +77,3 @@ export const translateMarkdown = (plainText, isGuardXss = false) => {
   });
 };
 
-
-export function getAnchorList(str) {
-  const pattern = /<(h[1-6])[\s\S]+?(?=<\/\1>)/g; //正则匹配 h1-h6 作为锚点标题
-  const list = [];
-  function pushItem(arr, item) {
-    const len = arr.length;
-    const matchItem = arr[len - 1];
-    if (matchItem && matchItem.tag !== item.tag) {
-      pushItem(matchItem.children, item);
-    } else {
-      arr.push(item);
-      // debugger
-    }
-  }
-  let newStr = str.replace(pattern, ($0, $1) => {
-    const endIndex = $0.indexOf("</");
-    const startIndex = $0
-      .substring(0, endIndex === -1 ? undefined : endIndex)
-      .lastIndexOf(">");
-    const title = `${$0.substring(
-      startIndex + 1,
-      endIndex === -1 ? undefined : endIndex
-    )}`;
-    const href = `#${title}`;
-    const currentItem = {
-      tag: $1, // 标签类型
-      title,
-      href,
-      children: [],
-    };
-    pushItem(list, currentItem);
-    return `<${$1 + " id='" + title + "'" + $0.substring(3)}`;
-  });
-  return [list, newStr];
-}

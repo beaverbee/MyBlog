@@ -14,9 +14,10 @@ export default function BackStage({ children }) {
     },
   } = useBus();
   const [logList, setLogList] = useState([]);
+  const [isEdit, setIsEdit] = useState(false);
   useEffect(() => {
     async function getLog() {
-      const data = await axios.post("/admin/log");
+      const data = await axios.post("/log/list");
       if (data.status == 0) {
         setLogList(data.data);
       } else {
@@ -26,7 +27,7 @@ export default function BackStage({ children }) {
     getLog();
   }, []);
   return (
-    <Provider logList={logList}>
+    <Provider {...{ logList, isEdit, setIsEdit }}>
       <Spin
         spinning={spinning}
         className={style.spin}

@@ -3,8 +3,9 @@ import { Divider,Tag } from "antd";
 import styles from './content.module.css'
 
 export default function Content({ article,content }) {
+ 
   return (
-    <article>
+    <article className={styles["article-detail"]}>
       <div className={styles.postHeader}>
         <div className={styles.title}>{article.title}</div>
         <div className={styles.subInformation} style={{ fontSize: "1rem" }}>
