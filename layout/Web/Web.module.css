@@ -14,6 +14,6 @@
 }
 
 .spin{
-    position: relative !important;
-    top:50vh !important;
+    position: fixed !important;
+    top:30% !important;
 }

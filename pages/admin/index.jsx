@@ -1,6 +1,6 @@
 import BackStage from "../../layout/Admin";
 import Head from "next/head";
-
+import Minions from "../../components/animation";
 
 export default function Admin() {
   return (
@@ -12,7 +12,7 @@ export default function Admin() {
           content="This is Blog project based on React.js and Next.js"
         />
       </Head>
-      <span>Hello</span>
+      <Minions />
     </BackStage>
   );
 }

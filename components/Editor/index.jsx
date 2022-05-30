@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input, Row, Col, Form, Button, message, Spin, Modal } from "antd";
 import { WarningTwoTone } from "@ant-design/icons";
 import style from "./editor.module.css";
@@ -11,15 +11,12 @@ import axios from "../../utils/axios";
 import { nanoid } from "nanoid";
 import qs from "qs";
 import { useRouter } from "next/router";
-import { useBackStage } from "../../hooks/useBackStage";
 
 const { TextArea } = Input;
 const { useForm } = Form;
 
-const content = { title: "111", desc: "111", tags: "Node#JavaScript" };
-
-export default function Editor(props) {
-  const { isEdit } = useBackStage();
+function Editor(props) {
+  const { data } = props;
   const [clear, setClear] = useState(true);
   const [contentForm] = useForm();
   const [htmlContent, sethtmlContent] = useState("");
@@ -38,27 +35,28 @@ export default function Editor(props) {
       .then((value) => {
         const { title, desc } = value;
         const tags = value.tags.split("#");
-        const htmlContent = translateMarkdown(value.content);
+        const htmlContent = value.content;
         const time = moment().format("YYYY-MM-DD");
         return axios.post(
-          "/article/create",
+          data && data.status === 0 ? "/article/edit" : "/article/create",
           qs.stringify({
             title,
             desc,
             time,
             content: htmlContent,
             tags,
-            articleId: nanoid(),
+            articleId:
+              data && data.status === 0 ? data.data.articleId : nanoid(),
           })
         );
       })
       .then((value) => {
         if (value.status === 0) {
-          message.success(`文章${isEdit ? "修改" : "发表"}成功`);
+          message.success(`文章${data ? "修改" : "发表"}成功`);
           axios.post(
             "/log/create",
             qs.stringify({
-              action: isEdit ? "edit" : "create",
+              action: data ? "edit" : "create",
               time: moment().format("YYYY-MM-DD"),
               title: value.data.title,
             })
@@ -98,6 +96,15 @@ export default function Editor(props) {
         }
       });
   }
+  useEffect(() => {
+    if (data && data.status === 0) {
+      const tags = data.data.tags.join("#");
+      const {
+        data: { title, content, desc },
+      } = data;
+      contentForm.setFieldsValue({ title, content, desc, tags });
+    }
+  }, [data, contentForm]);
 
   return (
     <Spin spinning={loading} delay={500}>
@@ -108,7 +115,6 @@ export default function Editor(props) {
             labelCol={{ span: 2 }}
             wrapperCol={{ span: 20 }}
             form={contentForm}
-            initialValues={content}
           >
             <Form.Item
               label="标题"
@@ -165,7 +171,11 @@ export default function Editor(props) {
               <div className={style.clear}>未生成预览</div>
             ) : (
               <Content
-                {...{ article: subInformation, content: htmlContent }}
+                {...{
+                  article: subInformation,
+                  content: htmlContent,
+                  isEdit: true,
+                }}
               ></Content>
             )}
           </div>
@@ -189,3 +199,5 @@ export default function Editor(props) {
     </Spin>
   );
 }
+
+export default Editor;

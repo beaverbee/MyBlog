@@ -2,7 +2,6 @@ import { marked } from "marked";
 import xss from "xss";
 import hljs from "highlight.js";
 
-
 /**
  * @param {string} path
  * @returns {Boolean}
@@ -76,4 +75,5 @@ export const translateMarkdown = (plainText, isGuardXss = false) => {
     },
   });
 };
+
 

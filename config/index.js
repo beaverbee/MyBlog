@@ -3,6 +3,7 @@ import {
   EditOutlined,
   FormOutlined,
   RollbackOutlined,
+  HomeOutlined,
 } from "@ant-design/icons";
 import { getItem } from '../utils';
 import style from '../layout/Admin/leftNav/leftNav.module.css'
@@ -18,13 +19,14 @@ export const LOGIN = "login";
 export const REGISTER = "register";
 
 export const menusList = [
+  getItem("后台首页", "/admin", <HomeOutlined className={style.icon}/>),
   getItem(
     "文章列表",
     "/admin/list",
     <UnorderedListOutlined className={style.icon} />
   ),
-  getItem("博客日志", "/admin/log", <EditOutlined className={style.icon}/>),
-  getItem("新建文章", "/admin/create", <FormOutlined className={style.icon} />),
+  getItem("博客日志", "/admin/log", <EditOutlined className={style.icon} />),
+  getItem("编辑文章", "/admin/edit", <FormOutlined className={style.icon} />),
   getItem("返回博客", "/", <RollbackOutlined className={style.icon} />),
 ];
 
