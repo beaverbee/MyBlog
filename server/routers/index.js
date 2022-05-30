@@ -62,14 +62,40 @@ router.get("/article/detail", (req, res) => {
 
 router.post("/article/create", (req, res) => {
   const { title, articleId, desc, time, content, tags } = qs.parse(req.body);
-  console.log(title, articleId, desc, time);
   setHeader(res);
   ArticleModel.create({ title, articleId, desc, tags, time, content })
     .then((article) => {
-      res.send({ status: 0, data:article });
+      res.send({ status: 0, data: article });
     })
     .catch((error) => {
       res.send({ status: 1, msg: "非常抱歉，文章被哥斯拉吞了，请重试" });
+    });
+});
+
+router.post("/article/edit", (req, res) => {
+  const { title, articleId, desc, time, content, tags } = qs.parse(req.body);
+  setHeader(res);
+  ArticleModel.findOneAndUpdate(
+    { articleId },
+    { title, articleId, desc, time, content, tags }
+  )
+    .then((article) => {
+      res.send({ status: 0, data: article });
+    })
+    .catch((e) => {
+      res.send({ status: 1, msg: "操作失败，请重试" });
+    });
+});
+
+router.get("/article/delete", (req, res) => {
+  const articleId = req.query.articleId;
+  setHeader(res);
+  ArticleModel.deleteOne({ articleId })
+    .then(() => {
+      res.send({ status: 0 });
+    })
+    .catch(() => {
+      res.send({ status: 1 });
     });
 });
 

@@ -1,5 +1,6 @@
 .article{
-    min-height: 10vh;
+    height: 77vh;
+    overflow-y: scroll;
 }
 
 .postHeader{

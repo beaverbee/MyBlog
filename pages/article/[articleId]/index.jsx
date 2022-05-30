@@ -8,7 +8,6 @@ import axios from "../../../utils/axios";
 import Discuss from "../../../components/Discuss";
 import Content from "../../../components/Content";
 
-
 export function getAnchorList(str) {
   const pattern = /<(h[1-6])[\s\S]+?(?=<\/\1>)/g; //正则匹配 h1-h6 作为锚点标题
   const list = [];
@@ -72,7 +71,13 @@ export default function Article(props) {
         {article.status === 0 ? (
           <Row>
             <Col span={18}>
-              <Content {...{ article:article.data, content:newContent }}></Content>
+              <Content
+                {...{
+                  article: article.data,
+                  content: newContent,
+                  isEdit: false,
+                }}
+              ></Content>
               <Divider
                 style={{
                   height: "2px",

@@ -9,7 +9,6 @@ import axios from "../utils/axios";
 import ArticleList from "../components/ArticleList";
 import { SET_VISIT } from "../config";
 
-
 const Home = memo(function MyHome(props) {
   const [instance, setInstance] = useState(true);
   const {
@@ -23,6 +22,15 @@ const Home = memo(function MyHome(props) {
     setTimeout(() => {
       setInstance(false);
     }, 6000);
+    if (data.status === 0) {
+      data.data.sort((a, b) => {
+        if (b.time > a.time) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+    }
     return () => {
       dispatch({ type: SET_VISIT, value: false });
     };

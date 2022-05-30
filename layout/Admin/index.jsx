@@ -14,11 +14,17 @@ export default function BackStage({ children }) {
     },
   } = useBus();
   const [logList, setLogList] = useState([]);
-  const [isEdit, setIsEdit] = useState(false);
   useEffect(() => {
     async function getLog() {
       const data = await axios.post("/log/list");
       if (data.status == 0) {
+        data.data.sort((a, b) => {
+          if (b.time > a.time) {
+            return 1;
+          } else {
+            return -1;
+          }
+        });
         setLogList(data.data);
       } else {
         message.error("服务器出问题了，赶紧去维护");
@@ -27,7 +33,7 @@ export default function BackStage({ children }) {
     getLog();
   }, []);
   return (
-    <Provider {...{ logList, isEdit, setIsEdit }}>
+    <Provider {...{ logList }}>
       <Spin
         spinning={spinning}
         className={style.spin}

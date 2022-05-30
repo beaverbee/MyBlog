@@ -6,6 +6,7 @@ const ArticleSchema = new mongoose.Schema({
   tags: { type: Array, default: [] },
   articleId: { type: String, required: [] },
   content: { type: String, default: "" },
+  desc: { type: String, default: "" },
 });
 
 const ArticleModel = mongoose.model("article", ArticleSchema, "article");
