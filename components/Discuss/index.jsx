@@ -38,12 +38,8 @@ const Discuss = (props) => {
   const [value, setValue] = useState("");
   const [comment, setComment] = useState([]);
   const [submitting, withLoading] = useRequestLoading();
-  const {
-    state: {
-      params: { city },
-    },
-    dispatch,
-  } = useBus();
+  const { paramsReducer } = useBus();
+  const [params,dispatch]=paramsReducer
   useEffect(() => {
     async function getComment() {
       const data = await axios.post(

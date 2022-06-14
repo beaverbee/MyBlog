@@ -6,7 +6,7 @@ import { useRouter } from "next/dist/client/router";
 import moment from "moment";
 
 export default function Header() {
-  const { menusList } = useBackStage();
+  const { menusList, logList } = useBackStage();
   const router = useRouter();
   const [title, setTitle] = useState("后台首页");
   useEffect(() => {
@@ -22,10 +22,12 @@ export default function Header() {
       <div className={style.header}>
         <span className={style.content}>{title}</span>
         <span className={style.content}>
-          {`你已经有${moment().diff(
-            moment(menusList[0].time),
-            "day"
-          )}天没更新了，鸽子都没你能鸽`}
+          {logList.length !== 0
+            ? `你已经有${moment().diff(
+                moment(logList[0].time),
+                "day"
+              )}天没更新了，鸽子都没你能鸽`
+            : undefined}
         </span>
       </div>
       <Divider className={style.divider}></Divider>

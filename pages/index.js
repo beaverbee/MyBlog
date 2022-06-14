@@ -11,12 +11,9 @@ import { SET_VISIT } from "../config";
 
 const Home = memo(function MyHome(props) {
   const [instance, setInstance] = useState(true);
-  const {
-    state: {
-      params: { firstVisit },
-    },
-    dispatch,
-  } = useBus();
+  const { paramsReducer } = useBus();
+  const [params, dispatch] = paramsReducer;
+  const { firstVisit } = params;
   const { data } = props;
   useEffect(() => {
     setTimeout(() => {

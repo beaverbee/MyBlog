@@ -158,4 +158,20 @@ router.post("/log/create", (req, res) => {
     });
 });
 
+router.post("/login", (req, res) => {
+  const user = qs.parse(req.body);
+  setHeader(res);
+  UserModel.findOne({ ...user })
+    .then((data) => {
+      if (data) {
+        res.send({ status: 0, data });
+      } else {
+        res.send({ status: 1, msg: "用户名或密码错误" });
+      }
+    })
+    .catch(() => {
+      res.send({ status: 1, msg: "error" });
+    });
+});
+
 module.exports = router;
