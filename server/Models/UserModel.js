@@ -6,6 +6,6 @@ const userSchema = new mongoose.Schema({
   level: { type: Number, required: true },
 });
 
-const UserModel = mongoose.model("users", userSchema, "tuserag");
+const UserModel = mongoose.model("users", userSchema, "user");
 
 module.exports = UserModel;

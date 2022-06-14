@@ -1,0 +1,12 @@
+.brief{
+    margin-bottom: 4px;
+    font-size: 14px;
+    padding-left: 10px;
+}
+
+
+.divider{
+    height: 1rem;
+    border-top-color: rgba(0, 0, 0,0.4) !important;
+    font-size: 20px !important;
+}

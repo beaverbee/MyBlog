@@ -1,0 +1,13 @@
+.headerButton{
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.button{
+  width: 380px !important;
+  height: 35px;
+  font-size: 1rem;
+  position: relative;
+  left: 15%;
+}

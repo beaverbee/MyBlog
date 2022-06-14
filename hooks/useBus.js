@@ -5,8 +5,9 @@ import {
   createContext,
 } from "react";
 import mitt from "mitt";
-
 export const BusContext = createContext();
+
+
 
 export function useBus() {
   return useContext(BusContext);
@@ -23,10 +24,10 @@ export function useListener(name, fn) {
 }
 
 export function Provider(props) {
-  const { children,state,dispatch } = props;
+  const { children, userReducer, paramsReducer } = props;
   const [bus] = useState(() => mitt());
   return (
-    <BusContext.Provider value={{ bus, state, dispatch }}>
+    <BusContext.Provider value={{ bus, userReducer, paramsReducer }}>
       {children}
     </BusContext.Provider>
   );

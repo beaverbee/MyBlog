@@ -1,11 +1,7 @@
-/**
- * 该文件用于配置store和相应的reducer
- * 如果想实现多reducer的管理 store的数据名称要和 reducer的名称一致
- */
-
 import { GET_CITY, SET_VISIT, LOGIN, REGISTER, SET_LOADING } from "../config";
+import { useReducer } from "react";
 
-export const store = {
+const store = {
   user: { name: "", level: -1 },
   params: { key: "key", city: "M78星云", firstVisit: true, spinning: false },
 };
@@ -18,7 +14,7 @@ const user = (state, action) => {
     case "remove":
       return { ...state, level: action.value };
     case LOGIN:
-      return 1;
+      return { ...state, level: action.value };
     case REGISTER:
       return 1;
   }
@@ -36,16 +32,8 @@ const params = (state, action) => {
   }
 };
 
-//combine reducers
-const combineReducers = (reducers) => {
-  return function (state, action) {
-    return Object.keys(reducers)
-      .map((k) => ({
-        [k]: reducers[k](state[k], action),
-      }))
-      .reduce((prev, cur) => Object.assign({}, prev, cur));
-  };
-};
-
-
-export const reducers = combineReducers({ user, params });
+export function useCombineReducer() {
+  const userReducer = useReducer(user, store.user);
+  const paramsReducer = useReducer(params, store.params);
+  return [userReducer, paramsReducer];
+}

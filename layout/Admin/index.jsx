@@ -8,11 +8,9 @@ import { Provider } from "../../hooks/useBackStage";
 import axios from "../../utils/axios";
 
 export default function BackStage({ children }) {
-  const {
-    state: {
-      params: { spinning },
-    },
-  } = useBus();
+  const { paramsReducer } = useBus();
+  const [params,_] = paramsReducer;
+  const {spinning}=params
   const [logList, setLogList] = useState([]);
   useEffect(() => {
     async function getLog() {

@@ -9,13 +9,17 @@ const siderLayout = { xxl: 4, xl: 4, lg: 4, sm: 0, xs: 0 };
 const contentLayout = { xxl: 16, xl: 13, lg: 13, sm: 20, xs: 20 };
 
 export default function Web({ children }) {
-  const {
-    state: {
-      params: { spinning },
-    },
-  } = useBus();
+  const { paramsReducer } = useBus();
+  const [params, _] = paramsReducer;
+  const { spinning } = params;
   return (
-    <Spin spinning={spinning} tip="Loading" size="large" delay={500} className={style.spin}>
+    <Spin
+      spinning={spinning}
+      tip="Loading"
+      size="large"
+      delay={500}
+      className={style.spin}
+    >
       <div className={style.content}>
         <Row>
           <Col span={24}>
